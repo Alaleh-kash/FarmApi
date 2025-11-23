@@ -6,6 +6,12 @@ namespace FarmApi.Services
 {
     public class FarmService
     {
+        public string GetWeather()
+        {
+            // Dummy data – you can change it later
+            return "Sunny with 20°C";
+        }
+ 
         private readonly string _connectionString;
 
         public FarmService(IConfiguration config)
