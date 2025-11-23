@@ -1,47 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
-using FarmApi.Services;
+using Microsoft.EntityFrameworkCore;
+using FarmApi.Data;
 
 namespace FarmApi.Controllers
 {
     [ApiController]
-    [Route("/")]  // Base path
     public class FarmController : ControllerBase
     {
-        private readonly FarmService _farmService;
+        private readonly FarmDbContext _db;
 
-        public FarmController(FarmService farmService)
+        public FarmController(FarmDbContext db)
         {
-            _farmService = farmService;
+            _db = db;
         }
 
-        // -----------------------
-        // WEATHER
-        // -----------------------
-        [HttpGet("weatherforecast")]
+        // GET /animals
+        [HttpGet("animals")]
+        public async Task<IActionResult> GetAnimals()
+        {
+            return Ok(await _db.Animals.ToListAsync());
+        }
+
+        // GET /foods
+        [HttpGet("foods")]
+        public async Task<IActionResult> GetFoods()
+        {
+            return Ok(await _db.Foods.ToListAsync());
+        }
+
+        // GET /weather  (STATIC for now)
+        [HttpGet("weather")]
         public IActionResult GetWeather()
         {
-            var result = _farmService.GetWeather();
-            return Ok(result);
-        }
-
-        // -----------------------
-        // GET FARM ANIMALS
-        // -----------------------
-        [HttpGet("animals")]
-        public IActionResult GetFarmAnimals()
-        {
-            var result = _farmService.GetFarmAnimals();
-            return Ok(result);
-        }
-
-        // -----------------------
-        // GET FOODS
-        // -----------------------
-        [HttpGet("foods")]
-        public IActionResult GetFoods()
-        {
-            var result = _farmService.GetFoods();
-            return Ok(result);
+            return Ok(new { temp = 22, condition = "Sunny" });
         }
     }
 }
