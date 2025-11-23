@@ -97,13 +97,6 @@ options.AddPolicy("AllowAll",
                     .AllowAnyHeader()
                     .AllowAnyMethod());
 
-🐳 Docker Support (Optional)
-
-If you want to run the API in Docker:
-
-docker build -t farmapi .
-docker run -p 5258:80 farmapi
-
 🤝 License
 
 This project is created for personal learning and portfolio purposes.
